@@ -83,8 +83,12 @@ function UpdateEmployee() {
         try {
             await API.put(`/${id}`, form);
             navigate("/employees");
-        } catch {
-            setError("Unable to update employee. Please try again.");
+        } catch (error) {
+            if (error.response?.data?.message) {
+                setErrors({ email: error.response.data.message });
+            } else {
+                setError("Unable to update employee. Please try again.");
+            }
         }
     };
 
