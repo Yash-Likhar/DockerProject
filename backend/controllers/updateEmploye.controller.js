@@ -11,8 +11,16 @@ export const updateEmployee = (req, res) => {
         [name, email, department, salary, id],
         (err, result) => {
             if (err) {
+
+                if (err.code === "ER_DUP_ENTRY") {
+                    return res.status(400).json({
+                        message: "Email already exists"
+                    });
+                }
+
                 return res.status(500).json(err);
             }
+
             res.json({ message: "Employee Updated" });
         }
     );
