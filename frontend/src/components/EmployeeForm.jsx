@@ -63,7 +63,11 @@ function EmployeeForm({ fetchEmployees }) {
 
             fetchEmployees();
         } catch (error) {
-            console.log(error);
+            if (error.response?.data?.message) {
+                setErrors({ email: error.response.data.message });
+            } else {
+                console.log(error);
+            }
         }
     };
 
