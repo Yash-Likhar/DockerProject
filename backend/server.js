@@ -7,9 +7,11 @@ dotenv.config();
 
 import "./config/db.js";
 import employeeRoutes from "./routes/employe.routes.js";
+import { initializeDatabase } from "./config/db.js";
 
 
 const app = express();
+initializeDatabase();
 
 app.use(cors());
 app.use(express.json());
