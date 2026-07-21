@@ -112,56 +112,6 @@ git clone <your-repository-url>
 cd Docker/Project
 ```
 
-### Step 3: Start the Application
-
-```bash
-docker-compose up -d
-```
-
-This command will:
-- Download required images (if not present)
-- Build custom images (frontend & backend)
-- Create and start all 4 containers
-- Set up networking and volumes
-
-
-
-
-### Step 4: Wait for Services to Start
-
-```bash
-# Check container status
-docker-compose ps
-
-# View logs
-docker-compose logs -f
-```
-
-Once you see all containers with status `Up`, the application is ready!
-
-### step5: Access the application
-
-Open your browser and go to: http://<your-ec2-public-ip>
-```
-
-That's it! The application will be ready in about 30-60 seconds.
-
-**Replace `<your-ec2-public-ip>` with your actual EC2 instance public IP address.**
-
-### Stop the Application
-
-```bash
-docker-compose down
-```
-
-### Remove Everything (Including Data)
-
-```bash
-docker-compose down -v
-```
-
----
-
 ## ⚙️ Configuration
 
 ### Environment Variables
@@ -194,6 +144,56 @@ DB_NAME=application_db
 - Never commit `.env` files to version control
 - Use strong, unique passwords in production
 - Update credentials for each environment (dev, staging, production)
+
+
+### Step 3: Start the Application
+
+```bash
+docker-compose up -d
+```
+
+This command will:
+- Download required images (if not present)
+- Build custom images (frontend & backend)
+- Create and start all 4 containers
+- Set up networking and volumes
+
+
+
+
+### Step 4: Wait for Services to Start
+
+```bash
+# Check container status
+docker-compose ps
+
+# View logs
+docker-compose logs -f
+```
+
+Once you see all containers with status `Up`, the application is ready!
+
+### step5: Access the application
+
+```
+Open your browser and go to: http://<your-ec2-public-ip>
+That's it! The application will be ready in about 30-60 seconds.
+
+**Replace `<your-ec2-public-ip>` with your actual EC2 instance public IP address.**
+
+### Stop the Application
+
+```bash
+docker-compose down
+```
+
+### Remove Everything (Including Data)
+
+```bash
+docker-compose down -v
+```
+
+---
 
 ### Docker Network
 
