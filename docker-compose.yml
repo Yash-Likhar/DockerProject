@@ -1,0 +1,61 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - network
+    restart: unless-stopped
+    container_name: crud-frontend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    networks:
+      - network
+    restart: unless-stopped
+    depends_on:
+      my-sql:
+        condition: service_healthy
+    container_name: crud-backend
+    env_file: ./backend/.env
+
+  my-sql:
+    image: mysql
+    container_name: crud-db
+    volumes:
+      - volume:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: crudapp
+    networks:
+      - network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks: 
+      - network
+    container_name: crud-nginx
+    ports: 
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+
+
+networks:
+  network:
+
+volumes:
+  volume:
